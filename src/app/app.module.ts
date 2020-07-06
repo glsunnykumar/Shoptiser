@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http'
 
 import {MatInputModule} from '@angular/material/input';
@@ -15,6 +15,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,6 +26,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ConfirmBoxComponent } from './common/confirm-box/confirm-box.component';
+import { CatEditComponent } from './category/cat-edit/cat-edit.component';
 
 @NgModule({
   declarations: [
@@ -32,13 +35,15 @@ import { ConfirmBoxComponent } from './common/confirm-box/confirm-box.component'
     CatListComponent,
     HeaderComponent,
     SidebarComponent,
-    ConfirmBoxComponent
+    ConfirmBoxComponent,
+    CatEditComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     MatInputModule,
     MatCardModule,
     MatButtonModule,
@@ -50,7 +55,9 @@ import { ConfirmBoxComponent } from './common/confirm-box/confirm-box.component'
     MatMenuModule,
     MatIconModule,
     MatListModule,
+    MatProgressSpinnerModule,
     MatSidenavModule,
+    MatPaginatorModule,
     HttpClientModule
 
   ],

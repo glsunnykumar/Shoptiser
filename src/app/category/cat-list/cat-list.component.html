@@ -1,12 +1,18 @@
 <div id="basicScenario" class="product-physical">
+  <a mat-raised-button routerLink="/create" class="btn btn-primary" color="primary" type="submit">
+    Add Category
+  </a>
+<mat-spinner *ngIf ="isLoading"></mat-spinner>
+<table mat-table [dataSource]="categories" *ngIf="!isLoading" >
 
- 
-<table mat-table [dataSource]="categories" >
-
+    <ng-container matColumnDef="imageUrl">
+      <th mat-header-cell *matHeaderCellDef> Image Url </th>
+      <td mat-cell *matCellDef="let element" class="post-image">
+          <img [src]="element.imagePath" />
+      </td>
+    </ng-container>
     <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
-  
-   
   
     <!-- Name Column -->
     <ng-container matColumnDef="Title">
@@ -24,7 +30,7 @@
      <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef> Action </th>
       <td mat-cell *matCellDef="let element" class="action-link"> 
-        <button mat-button color="primary" (click)="onDelete(element.id)">Edit</button> | 
+        <a mat-button color="primary" [routerLink]="['/edit',element.id]" >Edit</a> | 
         <button mat-button color="warn" (click)="confirmDialog(element.id,element.title)">Delete</button>
       </td>
     </ng-container>

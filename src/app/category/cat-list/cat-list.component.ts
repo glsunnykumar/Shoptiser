@@ -39,11 +39,12 @@ import { Category } from '../category.model';
 
 export class CatListComponent implements OnInit, OnDestroy {
 
-  displayedColumns: string[] = ['Title' ,'Content','action'];
+  displayedColumns: string[] = ['imageUrl','Title' ,'Content','action'];
   
   result: string = '';
  
   categories: Category[] = [];
+  private isLoading = false;
  
  
   private catSubs: Subscription;
@@ -52,10 +53,10 @@ export class CatListComponent implements OnInit, OnDestroy {
   constructor(public categoryService: CategoryService,public dialog: MatDialog) { }
 
   ngOnInit() {
+    this.isLoading = true;
     this.categoryService.getCategories();
-
     this.catSubs = this.categoryService.getCategoryUpdatedListner().subscribe((category: Category[]) => {
-    
+      this.isLoading = false;
       this.categories = category;
       console.log(this.categories);
     })
