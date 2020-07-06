@@ -1,4 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy,ViewChild } from '@angular/core';
+import { MatPaginator} from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource} from '@angular/material';
 import { Subscription } from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirmBoxComponent,ConfirmDialogModel}from '../../common/confirm-box/confirm-box.component'
@@ -45,10 +48,10 @@ export class CatListComponent implements OnInit, OnDestroy {
  
   categories: Category[] = [];
   private isLoading = false;
- 
- 
+  dataSource =null;
   private catSubs: Subscription;
- 
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
 
   constructor(public categoryService: CategoryService,public dialog: MatDialog) { }
 
@@ -58,8 +61,13 @@ export class CatListComponent implements OnInit, OnDestroy {
     this.catSubs = this.categoryService.getCategoryUpdatedListner().subscribe((category: Category[]) => {
       this.isLoading = false;
       this.categories = category;
+     this.dataSource = new MatTableDataSource<Category>(this.categories);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      console.log('hello');
       console.log(this.categories);
     })
+   
   }
 
   confirmDialog(catId: string ,catName:string): void {

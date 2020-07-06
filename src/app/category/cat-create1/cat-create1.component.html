@@ -2,6 +2,20 @@
 <mat-card>
     <mat-spinner *ngIf="isLoading"></mat-spinner>
     <form [formGroup] ="form" (submit)="saveCategory()" *ngIf="!isLoading">
+        <h4>Add Category Level 1</h4>
+        
+        <mat-form-field appearance="fill">
+          <mat-label>Select Parent Category</mat-label>
+          <mat-select formControlName="parentCategory" required>
+            <mat-option placeholder="select category">--</mat-option>
+            <mat-option *ngFor="let category of categories" [value]="category">
+              {{category.title}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('parentCategory').invalid">Please Select Parent Category</mat-error>
+         
+        </mat-form-field>
+
         <mat-form-field>
             <mat-label>Add Category Title</mat-label>
             <input matInput 
@@ -10,6 +24,7 @@
              formControlName ="title">
             <mat-error *ngIf="form.get('title').invalid">Please enter a title</mat-error>
         </mat-form-field>
+
         <div>
             <button mat-stroked-button (click)="filepicker.click()" type="button">Pick Image</button>
             <input type="file" #filepicker (change)="onImgePicked($event)">
@@ -25,11 +40,10 @@
             >
             <mat-error *ngIf="form.get('content').invalid">Please enter a Content</mat-error>
         </mat-form-field>
-
-
         <button mat-raised-button class="btn btn-primary" color="primary" type="submit">
-            Add Category
+            Save Category
         </button>
+      
 
 
     </form>

@@ -4,6 +4,7 @@ import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http'
 
 import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -17,6 +18,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,7 +28,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ConfirmBoxComponent } from './common/confirm-box/confirm-box.component';
-import { CatEditComponent } from './category/cat-edit/cat-edit.component';
+import { CatCreate1Component } from './category/cat-create1/cat-create1.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,7 @@ import { CatEditComponent } from './category/cat-edit/cat-edit.component';
     HeaderComponent,
     SidebarComponent,
     ConfirmBoxComponent,
-    CatEditComponent
+    CatCreate1Component
   ],
   imports: [
     BrowserModule,
@@ -52,12 +54,14 @@ import { CatEditComponent } from './category/cat-edit/cat-edit.component';
     MatExpansionModule,
     MatTableModule,
     MatDialogModule,
+    MatSelectModule,
     MatMenuModule,
     MatIconModule,
     MatListModule,
     MatProgressSpinnerModule,
     MatSidenavModule,
     MatPaginatorModule,
+    MatSortModule,
     HttpClientModule
 
   ],
