@@ -1,6 +1,8 @@
 const express = require("express");
 const Category = require("../models/category");
+const CategoryLvl1 = require("../models/categorylvl1");
 const multer = require("multer");
+const category = require("../models/category");
 
 const router = express.Router();  
 
@@ -32,12 +34,13 @@ router.post("",multer({storage : storage}).single("image"), (req, res, next) => 
     const category = new Category({
         title: req.body.title,
         content: req.body.content,
-        imagePath : url +"/images/" + req.file.filename
+        imagePath : url +"/images/" + req.file.filename,
+        catlvl1 :null
     })
     console.log(category);
     category.save().then((createdCat)=>{
         res.status(201).json({
-            message: 'data post sucessfully',
+            message: 'data post  sucessfully',
            category :{
                ...createdCat,
              id : createdCat._id
@@ -46,6 +49,31 @@ router.post("",multer({storage : storage}).single("image"), (req, res, next) => 
     });
    
 });
+
+
+router.post("/lvl1",multer({storage : storage}).single("image"), (req, res, next) => {
+    const url = req.protocol +"://" +req.get("host");
+    const categorylvl1 = new CategoryLvl1({
+        title: req.body.title,
+        content: req.body.content,
+        imagePath : url +"/images/" + req.file.filename,
+        catName: req.body.catName,
+        catId : req.body.catId
+    })
+    console.log(categorylvl1);
+    categorylvl1.save().then((createdCatLvv1)=>{
+        console.log(createdCatLvv1);
+        res.status(201).json({
+             message: 'data post sucessfully',
+             categorylvl1 :{
+               ...createdCatLvv1,
+             id : createdCatLvv1._id
+           }
+        });
+    });
+});
+        
+
 
 router.put("/:id",multer({storage : storage}).single("image"),(req,res,next) =>{
     let imagePath =req.body.imagePath;
@@ -76,8 +104,30 @@ router.get("", (req, res, next) => {
 
 });
 
+router.get("/lvl1", (req, res, next) => {
+    console.log("fetching catgory level 2");
+    CategoryLvl1.find().then(documents => {
+        res.status(200).json({
+            message: 'Categories fetched suceesfully',
+            categorieslvl1: documents
+        });
+    })
+
+});
+
 router.get("/:id",(req,res,next)=>{
     Category.findById(req.params.id).then(cat =>{
+        if(cat){
+            res.status(200).json(cat);
+        }
+        else{
+            res.status(404).json({message : 'Post not found'});
+        }
+    })
+})
+
+router.get("/lvl1/:id",(req,res,next)=>{
+    CategoryLvl1.findById(req.params.id).then(cat =>{
         if(cat){
             res.status(200).json(cat);
         }
@@ -94,7 +144,6 @@ router.delete("/:id", (req, res, next) => {
             message: 'post deleted succesfully'
         });
     });
-   
 });
 
 module.exports = router;

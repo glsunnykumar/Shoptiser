@@ -29,6 +29,7 @@ import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ConfirmBoxComponent } from './common/confirm-box/confirm-box.component';
 import { CatCreate1Component } from './category/cat-create1/cat-create1.component';
+import { CatLvl1ListComponent } from './category/cat-lvl1-list/cat-lvl1-list.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { CatCreate1Component } from './category/cat-create1/cat-create1.componen
     HeaderComponent,
     SidebarComponent,
     ConfirmBoxComponent,
-    CatCreate1Component
+    CatCreate1Component,
+    CatLvl1ListComponent
   ],
   imports: [
     BrowserModule,

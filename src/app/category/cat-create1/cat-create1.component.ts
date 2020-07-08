@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {FormGroup,FormControl, Validators} from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Category } from '../category.model';
 import { CategoryService } from '../category.service';
 import { Subscription } from 'rxjs';
 import { mimeType } from '../cat-create/mime-type.validator';
+import { CategoryLvl1 } from '../categoryLvl1.model';
 
 
 interface Animal {
@@ -20,30 +21,31 @@ interface Animal {
 
 export class CatCreate1Component implements OnInit {
 
-  form:FormGroup;
-  category : Category;
+  form: FormGroup;
+  categoryLvl1: CategoryLvl1;
+  parentCategory: Category;
   imagePreview: string;
 
   private mode = 'create';
   private catId: string;
-  isLoading =false;
+  isLoading = false;
   private catSubs: Subscription;
   categories: Category[] = [];
-  constructor(public categoryService: CategoryService,public route: ActivatedRoute) { }
+  constructor(public categoryService: CategoryService, public route: ActivatedRoute) { }
 
   ngOnInit() {
 
     this.form = new FormGroup({
-      'parentCategory' : new FormControl(null,{
+      'parentCategory': new FormControl(null, {
         validators: [Validators.required]
       }),
-      'title' : new FormControl(null,{
-        validators: [Validators.required,Validators.minLength(3)]
+      'title': new FormControl(null, {
+        validators: [Validators.required, Validators.minLength(3)]
       }),
-      'content' : new FormControl(null ,{
-        validators :[Validators.required]
-      }) ,
-      'image' :new FormControl(null,{validators:[Validators.required],asyncValidators :[mimeType]})
+      'content': new FormControl(null, {
+        validators: [Validators.required]
+      }),
+      'image': new FormControl(null, { validators: [Validators.required], asyncValidators: [mimeType] })
     });
 
 
@@ -51,44 +53,49 @@ export class CatCreate1Component implements OnInit {
       if (paramMap.has('id')) {
         this.mode = 'edit';
         this.catId = paramMap.get('id');
-        this.isLoading =true;
-       this.categoryService.getCategory(this.catId).subscribe(catData =>{
-        this.isLoading =false;
-         this.category ={id : catData._id,title :catData.title ,content :catData.content,imagePath :catData.imagePath};
-         this.form.setValue({
-           'title':this.category.title ,'content': this.category.content,
-           'image':this.category.imagePath
-           
+        this.isLoading = true;
+        this.categoryService.getCategoryLvl1(this.catId).subscribe(catData => {
+          this.isLoading = false;
+          this.getParentCategory();
+          this.parentCategory = { id: catData.catId, title: catData.catName, content: '', imagePath: '' };
+          this.categoryLvl1 = { id: catData._id, title: catData.title, content: catData.content, imagePath: catData.imagePath, catId: catData.catId, catName: catData.catName };
+          this.form.setValue({
+            'title': this.categoryLvl1.title, 'content': this.categoryLvl1.content,
+            'image': this.categoryLvl1.imagePath,
+            'parentCategory': this.parentCategory
           });
-       });
+        
+
+        });
       } else {
         this.mode = 'create';
         this.catId = null;
-       this.getParentCategory();
+        this.getParentCategory();
       }
     });
-    
+
   }
 
-  onImgePicked(event:Event){
-    const file =(event.target as HTMLInputElement).files[0];
-    this.form.patchValue({image:file});
+  onImgePicked(event: Event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.form.patchValue({ image: file });
     this.form.get('image').updateValueAndValidity();
     const reader = new FileReader();
-    reader.onload =() =>{
-        this.imagePreview = reader.result as string;
+    reader.onload = () => {
+      this.imagePreview = reader.result as string;
     };
     reader.readAsDataURL(file);
   }
 
 
-  getParentCategory(){
+  getParentCategory()  {
     this.isLoading = true;
     this.categoryService.getCategories();
     this.catSubs = this.categoryService.getCategoryUpdatedListner().subscribe((category: Category[]) => {
       this.isLoading = false;
       this.categories = category;
     })
+   
   }
 
   saveCategory() {
@@ -96,13 +103,13 @@ export class CatCreate1Component implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    this.isLoading =true;
-    if(this.mode  === 'create'){
-      console.log(this.form.value.image)
-    this.categoryService.addCategory(this.form.value.title, this.form.value.content,this.form.value.image);
+    this.isLoading = true;
+    if (this.mode === 'create') {
+      console.log(this.form.value.parentCategory.id);
+      this.categoryService.addCategoryLv1(this.form.value.parentCategory.id, this.form.value.parentCategory.title, this.form.value.title, this.form.value.content, this.form.value.image);
     }
-    else{
-      this.categoryService.updateCategory(this.catId,this.form.value.title, this.form.value.content,this.form.value.image);
+    else {
+      this.categoryService.updateCategory(this.catId, this.form.value.title, this.form.value.content, this.form.value.image);
     }
     this.form.reset();
 

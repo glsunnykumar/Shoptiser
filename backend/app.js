@@ -7,7 +7,8 @@ const mongoose = require('mongoose');
 const categoryRoutes = require("./routes/categories");
 
 const app = express();
-mongoose.connect('mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=false')
+mongoose.connect("mongodb://localhost:27017/shoptiserdb", { useNewUrlParser: true })
+//mongoose.connect('mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=false')
     .then(
         () => {
             console.log('connected to database');
