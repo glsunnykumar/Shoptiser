@@ -58,7 +58,8 @@ router.post("/lvl1",multer({storage : storage}).single("image"), (req, res, next
         content: req.body.content,
         imagePath : url +"/images/" + req.file.filename,
         catName: req.body.catName,
-        catId : req.body.catId
+        catId : req.body.catId,
+        categories : req.body.catId
     })
     console.log(categorylvl1);
     categorylvl1.save().then((createdCatLvv1)=>{
