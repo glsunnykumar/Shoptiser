@@ -6,7 +6,8 @@ const catlvl1Schema = mongoose.Schema({
     content :{type:String,required : true},
     imagePath :{type:String , required : true},
     catName:{type:String , required : true},
-    catId:{type:String , required : true}
+    catId:{type:String , required : true},
+    Categories: [{ type: Schema.Types.ObjectId, ref: 'Category' }]
 });
 
 module.exports = mongoose.model('Categorylv1',catlvl1Schema);  
