@@ -60,11 +60,12 @@ export class CatCreate1Component implements OnInit {
           console.log(catData);
          // this.parentCategory = { id: catData.catId, title: catData.catName, content: '', imagePath: '' };
           this.categoryLvl1 = { id: catData._id, title: catData.title, content: catData.content, imagePath: catData.imagePath, parentCategory :catData.parentCategory};
-          console.log(this.categoryLvl1.parentCategory);
+          console.log(this.categoryLvl1.parentCategory[0]);
           this.form.setValue({
             'title': this.categoryLvl1.title, 'content': this.categoryLvl1.content,
             'image': this.categoryLvl1.imagePath,
-            'parentCategory': null
+            'parentCategory': this.categoryLvl1.parentCategory[0]
+
           });
 
         });

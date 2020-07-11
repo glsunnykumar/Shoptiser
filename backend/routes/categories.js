@@ -122,7 +122,6 @@ router.get("/lvl1", (req, res, next) => {
 
 router.get("/lvl11", (req, res, next) => {
     console.log("fetching catgory level 2");
-
     CategoryLvl1.findOne({}).populate('parentCategory')
         .then(documents => { 
             console.log(documents);

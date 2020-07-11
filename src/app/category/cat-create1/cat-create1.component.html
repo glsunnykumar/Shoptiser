@@ -6,9 +6,9 @@
         
         <mat-form-field appearance="fill">
           <mat-label>Select Parent Category</mat-label>
-          <mat-select formControlName="parentCategory" required>
+          <mat-select formControlName="parentCategory">
             <mat-option placeholder="select category">--</mat-option>
-            <mat-option *ngFor="let category of categories" [(value)]="category">
+            <mat-option *ngFor="let category of categories" [value]="category.id">
               {{category.title}}
             </mat-option>
           </mat-select>
