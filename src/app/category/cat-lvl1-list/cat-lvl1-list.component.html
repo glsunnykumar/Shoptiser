@@ -8,7 +8,15 @@
   
     <ng-container matColumnDef="parentCategory">
         <th mat-header-cell *matHeaderCellDef > Parent Category </th>
-        <td mat-cell *matCellDef="let element"> {{element.catName}} </td>
+        <td mat-cell *matCellDef="let element">
+          <ng-container  *ngFor="let pCategory of element.parentCategory">
+            <div class="parcel">
+              <ul>
+                <li> {{pCategory.title}}</li>
+              </ul>
+            </div>
+          </ng-container>
+          </td>
       </ng-container>
 
       <ng-container matColumnDef="imageUrl">

@@ -53,18 +53,19 @@ export class CatCreate1Component implements OnInit {
       if (paramMap.has('id')) {
         this.mode = 'edit';
         this.catId = paramMap.get('id');
-        this.isLoading = true;
+        this.isLoading = true;        
+        this.getParentCategory();
         this.categoryService.getCategoryLvl1(this.catId).subscribe(catData => {
           this.isLoading = false;
-          this.getParentCategory();
+          console.log(catData);
          // this.parentCategory = { id: catData.catId, title: catData.catName, content: '', imagePath: '' };
           this.categoryLvl1 = { id: catData._id, title: catData.title, content: catData.content, imagePath: catData.imagePath, parentCategory :catData.parentCategory};
+          console.log(this.categoryLvl1.parentCategory);
           this.form.setValue({
             'title': this.categoryLvl1.title, 'content': this.categoryLvl1.content,
             'image': this.categoryLvl1.imagePath,
-            'parentCategory': this.parentCategory
+            'parentCategory': null
           });
-        
 
         });
       } else {

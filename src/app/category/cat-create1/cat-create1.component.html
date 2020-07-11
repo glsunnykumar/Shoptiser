@@ -8,7 +8,7 @@
           <mat-label>Select Parent Category</mat-label>
           <mat-select formControlName="parentCategory" required>
             <mat-option placeholder="select category">--</mat-option>
-            <mat-option *ngFor="let category of categories" [value]="category">
+            <mat-option *ngFor="let category of categories" [(value)]="category">
               {{category.title}}
             </mat-option>
           </mat-select>

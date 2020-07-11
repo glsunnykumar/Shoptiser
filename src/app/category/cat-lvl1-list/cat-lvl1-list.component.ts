@@ -28,6 +28,7 @@ export class CatLvl1ListComponent implements OnInit {
     this.isLoading = true;
     this.categoryService.getCategoriesLvl1();
     this.catSubs = this.categoryService.getCategoryLvl1UpdatedListner().subscribe((category: CategoryLvl1[]) => {
+    
       this.isLoading = false;
       this.categoriesLvl1 = category;
      this.dataSource = new MatTableDataSource<CategoryLvl1>(this.categoriesLvl1);

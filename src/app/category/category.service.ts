@@ -55,16 +55,15 @@ export class CategoryService {
       .pipe(map((cat) => {
         return cat.categorieslvl1.map(cat => {
           return {
-            title: cat.categorieslvl1.title,
-            content: cat.categorieslvl1.content,
-            id: cat.categorieslvl1._id,
-            imagePath: cat.categorieslvl1.imagePath,
-            parentCategory :cat.categorieslvl1.parentCategory
+            title: cat.title,
+            content: cat.content,
+            id: cat._id,
+            imagePath: cat.imagePath,
+            parentCategory :cat.parentCategory
           };
         })
         }))
       .subscribe(TransformedcatData => {
-        console.log(TransformedcatData);
         this.categoriesLvl1 = TransformedcatData;
         this.categorylvl1Updated.next([...this.categoriesLvl1]);
       });
