@@ -57,8 +57,8 @@ export class CatCreate1Component implements OnInit {
         this.categoryService.getCategoryLvl1(this.catId).subscribe(catData => {
           this.isLoading = false;
           this.getParentCategory();
-          this.parentCategory = { id: catData.catId, title: catData.catName, content: '', imagePath: '' };
-          this.categoryLvl1 = { id: catData._id, title: catData.title, content: catData.content, imagePath: catData.imagePath, catId: catData.catId, catName: catData.catName };
+         // this.parentCategory = { id: catData.catId, title: catData.catName, content: '', imagePath: '' };
+          this.categoryLvl1 = { id: catData._id, title: catData.title, content: catData.content, imagePath: catData.imagePath, parentCategory :catData.parentCategory};
           this.form.setValue({
             'title': this.categoryLvl1.title, 'content': this.categoryLvl1.content,
             'image': this.categoryLvl1.imagePath,

@@ -43,27 +43,26 @@ export class CategoryService {
         });
       }))
       .subscribe(TransformedcatData => {
+        console.log(TransformedcatData);
         this.categories = TransformedcatData;
         this.categoryUpdated.next([...this.categories]);
       });
 
   }
 
-
   getCategoriesLvl1() {
     this.http.get<{ message: string, categorieslvl1: any }>('http://localhost:3000/api/cat/lvl1')
-      .pipe(map((catData) => {
-        return catData.categorieslvl1.map(cat => {
+      .pipe(map((cat) => {
+        return cat.categorieslvl1.map(cat => {
           return {
-            title: cat.title,
-            content: cat.content,
-            id: cat._id,
-            imagePath: cat.imagePath,
-            catId: cat.catId,
-            catName: cat.catName
+            title: cat.categorieslvl1.title,
+            content: cat.categorieslvl1.content,
+            id: cat.categorieslvl1._id,
+            imagePath: cat.categorieslvl1.imagePath,
+            parentCategory :cat.categorieslvl1.parentCategory
           };
-        });
-      }))
+        })
+        }))
       .subscribe(TransformedcatData => {
         console.log(TransformedcatData);
         this.categoriesLvl1 = TransformedcatData;
@@ -85,7 +84,7 @@ export class CategoryService {
   }
 
   getCategoryLvl1(id: string) {
-    return this.http.get<{ _id: string, title: string, content: string, imagePath: string ,catId:string ,catName:string }>('http://localhost:3000/api/cat/lvl1/' + id)
+    return this.http.get<{ _id: string, title: string, content: string, imagePath: string ,parentCategory:Category }>('http://localhost:3000/api/cat/lvl1/' + id)
   }
 
   addCategory(title: string, content: string, image: File) {
@@ -118,7 +117,7 @@ export class CategoryService {
       categoryData)
       .subscribe((responseData1) => {
         console.log(responseData1.message);
-        const categoryLvl: CategoryLvl1 = { id: responseData1.categorylvl1.id, title: title, content: content, imagePath: responseData1.categorylvl1.imagePath, catId: catLvlId, catName: catLvlName };
+        const categoryLvl: CategoryLvl1 = { id: responseData1.categorylvl1.id, title: title, content: content, imagePath: responseData1.categorylvl1.imagePath, parentCategory: responseData1.categorylvl1.parentCategory };
         window.alert('The category has been added!');
         this.categoriesLvl1.push(categoryLvl);
         this.categorylvl1Updated.next([...this.categoriesLvl1]);
@@ -138,11 +137,11 @@ export class CategoryService {
       categoryData)
       .subscribe((responseData1) => {
         console.log(responseData1.message);
-        const categoryLvl: CategoryLvl1 = { id: responseData1.categorylvl1.id, title: title, content: content, imagePath: responseData1.categorylvl1.imagePath, catId: catLvl2Id, catName: catLvl2Name };
-        window.alert('The category has been added!');
-        this.categoriesLvl1.push(categoryLvl);
-        this.categorylvl1Updated.next([...this.categoriesLvl1]);
-        this.router.navigate(["/catLvl1"]);
+        // const categoryLvl: CategoryLvl1 = { id: responseData1.categorylvl1.id, title: title, content: content, imagePath: responseData1.categorylvl1.imagePath, catId: catLvl2Id, catName: catLvl2Name };
+        // window.alert('The category has been added!');
+        // this.categoriesLvl1.push(categoryLvl);
+        // this.categorylvl1Updated.next([...this.categoriesLvl1]);
+        // this.router.navigate(["/catLvl1"]);
       });
 
   }
@@ -158,11 +157,11 @@ export class CategoryService {
       categoryData)
       .subscribe((responseData1) => {
         console.log(responseData1.message);
-        const categoryLvl: CategoryLvl1 = { id: responseData1.categorylvl1.id, title: title, content: content, imagePath: responseData1.categorylvl1.imagePath, catId: catLvl3Id, catName: catLvl3Name };
-        window.alert('The category has been added!');
-        this.categoriesLvl1.push(categoryLvl);
-        this.categorylvl1Updated.next([...this.categoriesLvl1]);
-        this.router.navigate(["/catLvl1"]);
+        // const categoryLvl: CategoryLvl1 = { id: responseData1.categorylvl1.id, title: title, content: content, imagePath: responseData1.categorylvl1.imagePath, catId: catLvl3Id, catName: catLvl3Name };
+        // window.alert('The category has been added!');
+        // this.categoriesLvl1.push(categoryLvl);
+        // this.categorylvl1Updated.next([...this.categoriesLvl1]);
+        // this.router.navigate(["/catLvl1"]);
       });
 
   }
